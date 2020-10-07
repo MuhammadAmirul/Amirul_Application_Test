@@ -13,8 +13,6 @@
 - Press F1 to return to the menu scene.
 - Press F2 to reload the current scene.
 - The buttons are titled "Red Scene", "Blue Scene", and "Green Scene". The contents of each scene are listed respectively below.
-Red Scene
-
 
 ### Red Scene
 *To demonstrate your foundations by displaying and modifying a simple object.*
