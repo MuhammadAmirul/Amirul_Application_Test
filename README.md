@@ -1,7 +1,7 @@
 # Mixed Realms Programmer Application Test
 
 ## Tools
-- Unity (2020.1.7f1)
+- Unity (2020.1.7f1 or later)
 - Any tweening asset of your choice (DOTween is included)
 
 ## Deliverables
