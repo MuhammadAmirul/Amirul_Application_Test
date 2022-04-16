@@ -11,17 +11,17 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: Red
+  - name: First
     cost: 1
-  - name: 
+  - name: Second
     cost: 1
-  - name: 
+  - name: Third
     cost: 1
-  - name: 
+  - name: Fourth
     cost: 1
-  - name: 
+  - name: Fifth
     cost: 1
-  - name: 
+  - name: Sixth
     cost: 1
   - name: 
     cost: 1
