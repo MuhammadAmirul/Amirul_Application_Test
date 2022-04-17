@@ -8,6 +8,10 @@ public class AIState : State
     protected AIController m_aiController;
     protected StateMachine m_AIStateMachine;
 
+    protected int wayPointIndex;
+    protected float distanceFromWayPoint;
+    protected bool lastLap;
+
     public AIState(AIController aiController, StateMachine aiStateMachine)
     {
         m_aiController = aiController;

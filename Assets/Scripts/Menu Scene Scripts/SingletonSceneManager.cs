@@ -11,10 +11,6 @@ public class SingletonSceneManager : MonoBehaviour
     [SerializeField] private string currentScene;
     [SerializeField] private string redScene, blueScene, greenScene;
 
-    public string CurrentScene => currentScene;
-
-    public Action GameManagerCheckCurrentScene;
-
     private void Awake()
     {
         if (instance != null)
@@ -36,38 +32,9 @@ public class SingletonSceneManager : MonoBehaviour
     void LoadedScene(Scene scene, LoadSceneMode loadSceneMode)
     {
         currentScene = scene.name;
-        Debug.Log("CURRENT SCENE CAPS: " + CurrentScene);
-        GameManagerCheckCurrentScene?.Invoke();
-    }
-
-    void LoadMenuScene()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            SceneManager.LoadSceneAsync("MenuScene");
-        }
-    }
-
-    void LoadCurrentScene()
-    {
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            switch (currentScene)
-            {
-                case "RedScene":
-                    Debug.Log("RED SCENE!!!!!!!!!!");
-                    SceneManager.sceneLoaded -= LoadedScene;
-                    //UnloadScene();
-                    LoadRedScene();
-                    GameManagerCheckCurrentScene?.Invoke();
-                    SceneManager.sceneLoaded += LoadedScene;
-                    break;
-                case "BlueScene":
-                    Debug.Log("BLUE SCENE!!!!!!!!!!");
                     SceneManager.sceneLoaded += LoadedScene;
                     break;
             }
-        }
     }
 
     // Start is called before the first frame update
@@ -95,5 +62,34 @@ public class SingletonSceneManager : MonoBehaviour
     void Update()
     {
         LoadCurrentScene();
+    }
+
+    void LoadCurrentScene()
+    {
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            switch (currentScene)
+            {
+                case "RedScene":
+                    Debug.Log("RED SCENE!!!!!!!!!!");
+                    SceneManager.sceneLoaded -= LoadedScene;
+                    //UnloadScene();
+                    LoadRedScene();
+                    SceneManager.sceneLoaded += LoadedScene;
+                    break;
+                case "BlueScene":
+                    Debug.Log("BLUE SCENE!!!!!!!!!!");
+                    SceneManager.sceneLoaded += LoadedScene;
+                    break;
+            }
+        }
+    }
+
+    void LoadMenuScene()
+    {
+        if (Input.GetKeyDown(KeyCode.F1) && !currentScene.Equals("MenuScene"))
+        {
+            SceneManager.LoadSceneAsync("MenuScene");
+        }
     }
 }

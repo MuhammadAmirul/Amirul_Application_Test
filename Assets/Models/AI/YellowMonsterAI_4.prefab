@@ -3346,9 +3346,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3862592447288515417}
   - component: {fileID: 3862592447279002783}
+  - component: {fileID: 5762902410380931137}
+  - component: {fileID: 5762902410380931135}
+  - component: {fileID: 5762902410380931136}
   m_Layer: 0
   m_Name: YellowMonsterAI_4
-  m_TagString: Untagged
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3385,7 +3388,7 @@ Animator:
   m_GameObject: {fileID: 3862592447288346425}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: eeebdeb8be91e0e43ae9170c2d8e4279, type: 3}
-  m_Controller: {fileID: 9100000, guid: f5e71d2eda3d6cc40857811c187df502, type: 2}
+  m_Controller: {fileID: 9100000, guid: bfef4d0f5b18aae4cad6eaa43f488eda, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -3394,6 +3397,63 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!54 &5762902410380931137
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862592447288346425}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!195 &5762902410380931135
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862592447288346425}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 250
+  m_StoppingDistance: 1.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 71
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &5762902410380931136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862592447288346425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f2c60d825065146bdf6ab66cb71d53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenGameManager: {fileID: 0}
+  contestant: 3
+  agent: {fileID: 5762902410380931135}
+  lane: {fileID: 0}
+  wayPointsList: []
+  rigidbody: {fileID: 5762902410380931137}
+  animator: {fileID: 3862592447279002783}
 --- !u!1 &3862592447288346429
 GameObject:
   m_ObjectHideFlags: 0
