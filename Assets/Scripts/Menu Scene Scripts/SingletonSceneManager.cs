@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SingletonSceneManager : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class SingletonSceneManager : MonoBehaviour
 
     [SerializeField] private string currentScene;
     [SerializeField] private string redScene, blueScene, greenScene;
+
+    public string CurrentScene => currentScene;
+
+    public Action GameManagerCheckCurrentScene;
 
     private void Awake()
     {
@@ -28,14 +33,11 @@ public class SingletonSceneManager : MonoBehaviour
         SceneManager.sceneLoaded += LoadedScene; Debug.Log("ENABLED!!!!!!");
     }
 
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= LoadedScene; Debug.Log("DISABLED!!!!!!");
-    }
-
     void LoadedScene(Scene scene, LoadSceneMode loadSceneMode)
     {
         currentScene = scene.name;
+        Debug.Log("CURRENT SCENE CAPS: " + CurrentScene);
+        GameManagerCheckCurrentScene?.Invoke();
     }
 
     void LoadMenuScene()
@@ -57,6 +59,7 @@ public class SingletonSceneManager : MonoBehaviour
                     SceneManager.sceneLoaded -= LoadedScene;
                     //UnloadScene();
                     LoadRedScene();
+                    GameManagerCheckCurrentScene?.Invoke();
                     SceneManager.sceneLoaded += LoadedScene;
                     break;
                 case "BlueScene":
@@ -76,6 +79,11 @@ public class SingletonSceneManager : MonoBehaviour
     public void LoadRedScene()
     {
         SceneManager.LoadSceneAsync(redScene);
+    }
+
+    public void LoadBlueScene()
+    {
+        SceneManager.LoadSceneAsync(blueScene);
     }
 
     void UnloadScene()
