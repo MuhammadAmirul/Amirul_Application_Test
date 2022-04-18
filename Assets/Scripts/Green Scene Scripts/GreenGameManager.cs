@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using UnityEngine.UI;
 
 public class GreenGameManager : MonoBehaviour
 {
+    [SerializeField] private Button startRaceButton;
     [Header("Contestants")]
     [SerializeField] private List<GameObject> contestants;
     public List<GameObject> Contestants => contestants;
@@ -125,6 +127,7 @@ public class GreenGameManager : MonoBehaviour
     }
 
     // Enable the game to commence when Start Race button is pressed.
+    // This method is added into the OnClick of the StartRaceButton.
     public void EnableStartRace()
     {
         if (completedLap == 6)
@@ -139,6 +142,7 @@ public class GreenGameManager : MonoBehaviour
         }
 
         startRace = true;
+        startRaceButton.gameObject.SetActive(false);
     }
 
     void EnableAI()
@@ -167,6 +171,7 @@ public class GreenGameManager : MonoBehaviour
         if (completedLap == 6)
         {
             startRace = false;
+            startRaceButton.gameObject.SetActive(true);
         }
 
         SpawnRocks();

@@ -70,18 +70,21 @@ public class SingletonSceneManager : MonoBehaviour
     {
         loadingBackground.SetActive(true);
         Invoke("DelayRedSceneLoad", 1f); // Invoked to fake a 1 second loading time.
+        SceneManager.sceneLoaded += LoadedScene;
     }
 
     public void LoadBlueScene()
     {
         loadingBackground.SetActive(true);
         Invoke("DelayBlueSceneLoad", 1f); // Invoked to fake a 1 second loading time.
+        SceneManager.sceneLoaded += LoadedScene;
     }
 
     public void LoadGreenScene()
     {
         loadingBackground.SetActive(true);
         Invoke("DelayGreenSceneLoad", 1f); // Invoked to fake a 1 second loading time.
+        SceneManager.sceneLoaded += LoadedScene;
     }
 
     void DelayRedSceneLoad()

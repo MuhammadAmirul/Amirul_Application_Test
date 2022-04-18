@@ -5099,6 +5099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af2550d3872f89c4fa0584f55420f178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startRaceButton: {fileID: 543818823}
   contestants: []
   levelParentTransform: {fileID: 595554897}
   selectedLevel: {fileID: 0}
