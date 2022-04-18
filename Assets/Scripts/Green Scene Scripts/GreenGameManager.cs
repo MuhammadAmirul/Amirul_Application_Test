@@ -8,13 +8,13 @@ public class GreenGameManager : MonoBehaviour
 {
     [Header("Contestants")]
     [SerializeField] private List<GameObject> contestants;
-    //[SerializeField] private List<NavMeshAgent> agentList;
+    public List<GameObject> Contestants => contestants;
 
     [Header("Levels Properties")]
-    [SerializeField] private Transform levelParentTransform;
-    [SerializeField] private Transform selectedLevel;
-    [SerializeField] private Transform lanes;
-    [SerializeField] private List<Transform> individualLane;
+    [SerializeField] private Transform levelParentTransform; // The parent that holds the 2 levels of the green scene.
+    [SerializeField] private Transform selectedLevel; // Selected level after every finished race.
+    [SerializeField] private Transform lanes; // Lanes that exists in each level
+    [SerializeField] private List<Transform> individualLane; // Individual lanes that will act as way points for the 6 AIs.
     public Transform Lanes => lanes;
     [Space]
     [Header("Rocks Spawning Proporties")]
@@ -36,8 +36,7 @@ public class GreenGameManager : MonoBehaviour
         set { startRace = value; }
     }
 
-    private int levelNum;
-    private int previousLevelNum = 1;
+    private int levelNum = 1; // Level number that changes when a race is finished to choose different level.
 
     private void Awake()
     {
@@ -47,7 +46,7 @@ public class GreenGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EnableLevelRandomly();
+        EnableLevel();
         
         GetContestants();
         GetLanesTransform();
@@ -65,16 +64,22 @@ public class GreenGameManager : MonoBehaviour
         }
     }
 
-    // Enable the start level on Start.
-    void EnableStartingLevel()
+    // Enable the level on Start.
+    void EnableLevel()
     {
-        // Get the transform of the selected level based on the level number.
-        if (levelNum != previousLevelNum)
+        // Load the first level if the level number is equals to the levelParentTransform child count - 1.
+        // Otherwise, load the second level.
+        if (levelNum == levelParentTransform.childCount - 1)
         {
-            selectedLevel = levelParentTransform.GetChild(levelNum);
-            selectedLevel.gameObject.SetActive(true);
-            previousLevelNum = levelNum;
+            levelNum = 0;
         }
+        else
+        {
+            levelNum++;
+        }
+
+        selectedLevel = levelParentTransform.GetChild(levelNum);
+        selectedLevel.gameObject.SetActive(true);
     }
 
     // Get all the AIs in the scene.
@@ -119,29 +124,13 @@ public class GreenGameManager : MonoBehaviour
         }
     }
 
-    void EnableLevelRandomly()
-    {
-        if (levelNum == levelParentTransform.childCount - 1)
-        {
-            levelNum = 0;
-        }
-        else
-        {
-            levelNum++;
-        }
-
-        selectedLevel = levelParentTransform.GetChild(levelNum);
-        selectedLevel.gameObject.SetActive(true);
-        previousLevelNum = levelNum;
-    }
-
     // Enable the game to commence when Start Race button is pressed.
     public void EnableStartRace()
     {
         if (completedLap == 6)
         {
             DisableLevels();
-            EnableLevelRandomly();
+            EnableLevel();
             GetLanesTransform();
             GetIndividualLane();
             EnableAI();
@@ -154,8 +143,11 @@ public class GreenGameManager : MonoBehaviour
 
     void EnableAI()
     {
+        // Loop through the contestants list to set active true for the next level.
         for (int index = 0; index < contestants.Count; index++)
         {
+            // Call AIController GetWayPoints action to move them to their new
+            // starting position when the next level is loaded.
             contestants[index].SetActive(true);
             AIController aiController = contestants[index].GetComponent<AIController>();
             aiController.GetWayPoints?.Invoke();
@@ -171,6 +163,7 @@ public class GreenGameManager : MonoBehaviour
 
     void StopRace()
     {
+        // Make the bool false once all AIs have returned to their starting point.
         if (completedLap == 6)
         {
             startRace = false;
@@ -180,6 +173,7 @@ public class GreenGameManager : MonoBehaviour
     }
 
     #region Level 1 Functions
+    // Spawn Rocks when the first level is loaded and the startRace bool is true.
     void SpawnRocks()
     {
         if (startRace && levelNum == 0)
@@ -195,6 +189,7 @@ public class GreenGameManager : MonoBehaviour
         }
     }
 
+    // Spawn the rock on both left and right side of the obstacle.
     void SpawnRocksOnObstacle(Transform obstacle)
     {
         float randomLeft = obstacle.position.z - obstacle.localScale.x / 2.5f;
@@ -204,11 +199,13 @@ public class GreenGameManager : MonoBehaviour
         AddRocksToList(spawnedRock);
     }
 
+    // Add the spawn rocks into rocksList.
     void AddRocksToList(GameObject rock)
     {
         rocksList.Add(rock);
     }
 
+    // Destroy the rocks after the first level is completed.
     void DestroyRocks()
     {
         rocksList = GameObject.FindGameObjectsWithTag("Rock").ToList();

@@ -6,22 +6,19 @@ public class Crate : MonoBehaviour
 {
     [SerializeField] private new Rigidbody rigidbody;
     [Space]
-    [SerializeField] private float randomMinValue;
-    [SerializeField] private float randomMaxValue;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    [SerializeField] private float randomMinValue; // A random minimum value for the crate to bounce about.
+    [SerializeField] private float randomMaxValue; // A random maximum value for the crate to bounce  about.
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
+            // Give a random position for the crate to bounce when space key is pressed.
             Vector3 randomPos = new Vector3(Random.Range(-randomMinValue, randomMaxValue), Random.Range(randomMinValue, randomMaxValue), Random.Range(-randomMinValue, randomMaxValue));
-            rigidbody.AddForce(randomPos);
+
+            // Add force and torque using the randomPos to bounce at a random direction.
+            rigidbody.AddForce(randomPos, ForceMode.Impulse);
             rigidbody.AddTorque(randomPos);
         }
     }

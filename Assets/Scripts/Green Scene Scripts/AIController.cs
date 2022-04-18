@@ -13,7 +13,7 @@ public class AIController : MonoBehaviour
     private enum Contestant { First, Second, Third, Fourth, Fifth, Sixth };
 
     [Header("Enum Component")]
-    [SerializeField] Contestant contestant;
+    [SerializeField] Contestant contestant; // Contestants enum to indicate each AI is in which lane.
     
     [Header("NavMesh Agent Component")]
     [SerializeField] private NavMeshAgent agent;
@@ -37,14 +37,8 @@ public class AIController : MonoBehaviour
     }
     #endregion
     [Space]
-    [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private Animator animator;
     #region Properties
-    public Rigidbody Rigidbody
-    {
-        get { return rigidbody; }
-        set { rigidbody = value; }
-    }
     public Animator Animator
     {
         get { return animator; }
@@ -52,10 +46,11 @@ public class AIController : MonoBehaviour
     }
     #endregion
 
-    public StateMachine _AIStateMachine;
+    public StateMachine AIStateMachine;
 
-    public AIMovingState _AIMovingState;
-    public AIIdleState _AIIdleState;
+    public AIMovingState AIMovingState;
+    public AIIdleState AIIdleState;
+    public AIPausedState AIPausedState;
 
     public Action GetWayPoints;
 
@@ -65,22 +60,26 @@ public class AIController : MonoBehaviour
         greenGameManager = FindObjectOfType<GreenGameManager>();
 
         Invoke("GetWayPoint", 0.1f);
-        /*Contestant random = (Contestant)Random.Range(0, (int)Contestant.Sixth);
-        contestant = random;*/
+
+        // Set the GetWayPoint to the GetWayPoints Action to be called again when a new race starts.
         GetWayPoints = GetWayPoint;
 
-        _AIStateMachine = new StateMachine();
+        AIStateMachine = new StateMachine();
 
-        _AIMovingState = new AIMovingState(this, _AIStateMachine);
-        _AIIdleState = new AIIdleState(this, _AIStateMachine);
+        AIMovingState = new AIMovingState(this, AIStateMachine);
+        AIIdleState = new AIIdleState(this, AIStateMachine);
+        AIPausedState = new AIPausedState(this, AIStateMachine);
 
-        _AIStateMachine.Initialize(_AIIdleState);
+        // Start the AI state as Idle.
+        AIStateMachine.Initialize(AIIdleState);
     }
 
     void GetWayPoint()
     {
+        // Loops through all the child of the Lane transform to get the way points.
         for (int index = 0; index < greenGameManager.Lanes.childCount; index++)
         {
+            // Based on the switch, the AI will go through the way points respectively.
             switch (contestant)
             {
                 case Contestant.First:
@@ -113,6 +112,8 @@ public class AIController : MonoBehaviour
 
     void CheckForIndividualLane(int index, string laneNumber)
     {
+        // Checks the transform lane and check if the name contains 1st, 2nd, etc to
+        // start assigning the AI lanes.
         if (greenGameManager.Lanes.GetChild(index).name.Contains(laneNumber))
         {
             lane = greenGameManager.Lanes.GetChild(index);
@@ -122,8 +123,11 @@ public class AIController : MonoBehaviour
 
     void GetStartAndEndWayPoints(string laneNumber)
     {
+        // Clear the list for the new level.
         wayPointsList.Clear();
 
+        // After getting the lane, get the starting and ending point of the transform from the
+        // parent transform.
         for (int index = 0; index < lane.childCount; index++)
         {
             if (lane.GetChild(index).name.Contains(laneNumber))
@@ -135,12 +139,18 @@ public class AIController : MonoBehaviour
 
     void SpawnOnStartingPoint()
     {
+        // Spawns the AI on the starting way point.
         transform.position = wayPointsList[0].position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _AIStateMachine.CurrentState.LogicUpdate();
+        AIStateMachine.CurrentState.LogicUpdate();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        AIStateMachine.CurrentState.OnCollisionEnter(collision);
     }
 }

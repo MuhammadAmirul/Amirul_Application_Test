@@ -5,9 +5,6 @@ using DG.Tweening;
 
 public class TexturedCube : MonoBehaviour
 {
-    //[SerializeField] private Transform redCubeTransform;
-    [SerializeField] private Vector3 cubeRotation;
-    [Space]
     [SerializeField] private MeshRenderer redCubeRenderer;
 
     Vector3 enlargedCubeSize = new Vector3(2f, 2f, 2f);
@@ -17,37 +14,28 @@ public class TexturedCube : MonoBehaviour
 
     float duration = 1f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        //RotateYAxis();
         ResizingCube();
         MaterialXOffset();
     }
 
-    void RotateYAxis()
-    {
-        transform.Rotate(cubeRotation * Time.deltaTime);
-    }
-
     void ResizingCube()
     {
+        // Resizes cube to be enlarged when the cube is in normal size.
         if (transform.localScale == normalCubeSize)
         {
             transform.DOScale(enlargedCubeSize, duration).SetEase(Ease.InOutExpo);
         }
+        // Resizes cube to be normal when the cube is enlarged.
         else if (transform.localScale == enlargedCubeSize)
         {
             transform.DOScale(normalCubeSize, duration).SetEase(Ease.InOutExpo);
         }
     }
 
+    // Move the texture of the cube on the X axis.
     void MaterialXOffset()
     {
         redCubeRenderer.material.SetTextureOffset("_MainTex", textureOffset * Time.time);

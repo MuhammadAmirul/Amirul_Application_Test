@@ -11,11 +11,6 @@ namespace Amirul.AI.StateMachine
 
         }
 
-        /*public virtual void HandleInput()
-        {
-
-        }*/
-
         public virtual void LogicUpdate()
         {
 
@@ -27,6 +22,11 @@ namespace Amirul.AI.StateMachine
         }
 
         public virtual void Exit()
+        {
+
+        }
+
+        public virtual void OnCollisionEnter(Collision collision)
         {
 
         }

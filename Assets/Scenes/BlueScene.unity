@@ -297,7 +297,7 @@ Camera:
   m_GameObject: {fileID: 682669275}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 1303624584}
   randomMinValue: 10
-  randomMaxValue: 30
+  randomMaxValue: 20
 --- !u!54 &1303624584
 Rigidbody:
   m_ObjectHideFlags: 0

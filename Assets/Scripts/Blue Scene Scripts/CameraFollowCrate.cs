@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CameraFollowCrate : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform target; // Focuses on the crate that is set by the target.
 
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private Vector3 offset; // Offset position for the camera to follow the crate.
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,7 @@ public class CameraFollowCrate : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         transform.position = target.position + offset;
     }
