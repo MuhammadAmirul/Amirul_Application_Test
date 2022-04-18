@@ -17,6 +17,7 @@ public class Rock : MonoBehaviour
     IEnumerator Disappear()
     {
         yield return existTimer;
+        //gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
 

@@ -19,7 +19,7 @@ public class AIIdleState : AIState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (m_aiController.GreenGameManager.StartRace)
+        if (m_aiController.GreenGameManager.StartRace && !lastLap)
         {
             m_aiController._AIStateMachine.ChangeState(m_aiController._AIMovingState);
         }

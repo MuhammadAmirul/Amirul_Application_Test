@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Amirul.AI.StateMachine;
+using System;
 
 public class AIController : MonoBehaviour
 {
@@ -56,10 +57,17 @@ public class AIController : MonoBehaviour
     public AIMovingState _AIMovingState;
     public AIIdleState _AIIdleState;
 
+    public Action GetWayPoints;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(GetWayPoint());
+        greenGameManager = FindObjectOfType<GreenGameManager>();
+
+        Invoke("GetWayPoint", 0.1f);
+        /*Contestant random = (Contestant)Random.Range(0, (int)Contestant.Sixth);
+        contestant = random;*/
+        GetWayPoints = GetWayPoint;
 
         _AIStateMachine = new StateMachine();
 
@@ -69,10 +77,9 @@ public class AIController : MonoBehaviour
         _AIStateMachine.Initialize(_AIIdleState);
     }
 
-    IEnumerator GetWayPoint()
+    void GetWayPoint()
     {
-        yield return new WaitForSeconds(0.1f);
-        for (int index = 0; index < greenGameManager.lanes.childCount; index++)
+        for (int index = 0; index < greenGameManager.Lanes.childCount; index++)
         {
             switch (contestant)
             {
@@ -101,19 +108,22 @@ public class AIController : MonoBehaviour
                     break;
             }
         }
+        SpawnOnStartingPoint();
     }
 
     void CheckForIndividualLane(int index, string laneNumber)
     {
-        if (greenGameManager.lanes.GetChild(index).name.Contains(laneNumber))
+        if (greenGameManager.Lanes.GetChild(index).name.Contains(laneNumber))
         {
-            lane = greenGameManager.lanes.GetChild(index);
+            lane = greenGameManager.Lanes.GetChild(index);
             GetStartAndEndWayPoints(laneNumber);
         }
     }
 
     void GetStartAndEndWayPoints(string laneNumber)
     {
+        wayPointsList.Clear();
+
         for (int index = 0; index < lane.childCount; index++)
         {
             if (lane.GetChild(index).name.Contains(laneNumber))
@@ -121,6 +131,11 @@ public class AIController : MonoBehaviour
                 wayPointsList.Add(lane.GetChild(index));
             }
         }
+    }
+
+    void SpawnOnStartingPoint()
+    {
+        transform.position = wayPointsList[0].position;
     }
 
     // Update is called once per frame

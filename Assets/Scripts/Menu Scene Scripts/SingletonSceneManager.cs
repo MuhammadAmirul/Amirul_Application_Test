@@ -32,9 +32,6 @@ public class SingletonSceneManager : MonoBehaviour
     void LoadedScene(Scene scene, LoadSceneMode loadSceneMode)
     {
         currentScene = scene.name;
-                    SceneManager.sceneLoaded += LoadedScene;
-                    break;
-            }
     }
 
     // Start is called before the first frame update

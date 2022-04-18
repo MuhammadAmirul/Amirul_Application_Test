@@ -14,13 +14,14 @@ public class AIMovingState : AIState
     {
         base.Enter();
         wayPointIndex = 1;
+        m_aiController.Agent.speed = 3.5f;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        distanceFromWayPoint = CheckWayPointDistance(wayPointIndex); Debug.Log("DISTANCE: " + distanceFromWayPoint);
+        distanceFromWayPoint = CheckWayPointDistance(wayPointIndex);
 
         MovingToWayPoints();
     }
@@ -28,7 +29,10 @@ public class AIMovingState : AIState
     public override void Exit()
     {
         base.Exit();
+        lastLap = false;
         m_aiController.GreenGameManager.CompletedLap++;
+        m_aiController.Animator.ResetTrigger("isMoving");
+        m_aiController.gameObject.SetActive(false);
     }
 
     void MovingToWayPoints()
@@ -44,7 +48,6 @@ public class AIMovingState : AIState
             wayPointIndex = 0;
             lastLap = true;
         }
-        //Debug.Log("POINTS: " + wayPointIndex);
 
         if (CheckWayPointDistance(0) < m_aiController.Agent.stoppingDistance && lastLap)
         {

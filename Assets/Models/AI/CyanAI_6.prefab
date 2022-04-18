@@ -258,7 +258,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5189167246637190651}
   - component: {fileID: 5278588718963003183}
-  - component: {fileID: 1968476857242413}
   - component: {fileID: 1968476857242411}
   - component: {fileID: 1968476857242412}
   - component: {fileID: 5354112931041941297}
@@ -304,22 +303,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &1968476857242413
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5193777464159636609}
-  serializedVersion: 2
-  m_Mass: 3
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!195 &1968476857242411
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -359,7 +342,7 @@ MonoBehaviour:
   agent: {fileID: 1968476857242411}
   lane: {fileID: 0}
   wayPointsList: []
-  rigidbody: {fileID: 1968476857242413}
+  rigidbody: {fileID: 0}
   animator: {fileID: 5278588718963003183}
 --- !u!65 &5354112931041941297
 BoxCollider:
