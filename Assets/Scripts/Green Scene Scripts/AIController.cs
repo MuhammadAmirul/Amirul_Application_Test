@@ -50,7 +50,7 @@ public class AIController : MonoBehaviour
 
     public AIMovingState AIMovingState;
     public AIIdleState AIIdleState;
-    public AIPausedState AIPausedState;
+    public AIStunnedState AIStunnedState;
 
     public Action GetWayPoints;
 
@@ -68,7 +68,7 @@ public class AIController : MonoBehaviour
 
         AIMovingState = new AIMovingState(this, AIStateMachine);
         AIIdleState = new AIIdleState(this, AIStateMachine);
-        AIPausedState = new AIPausedState(this, AIStateMachine);
+        AIStunnedState = new AIStunnedState(this, AIStateMachine);
 
         // Start the AI state as Idle.
         AIStateMachine.Initialize(AIIdleState);

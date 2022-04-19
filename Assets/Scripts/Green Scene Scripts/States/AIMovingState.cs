@@ -49,7 +49,7 @@ public class AIMovingState : AIState
         // If AI collides with either the rock or barricade, pause the AI.
         if (collision.gameObject.tag == "Rock" || collision.gameObject.tag == "Barricade")
         {
-            m_aiController.AIStateMachine.ChangeState(m_aiController.AIPausedState);
+            m_aiController.AIStateMachine.ChangeState(m_aiController.AIStunnedState);
         }
     }
 

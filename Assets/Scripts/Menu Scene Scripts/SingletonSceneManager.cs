@@ -107,6 +107,7 @@ public class SingletonSceneManager : MonoBehaviour
     {
         LoadCurrentScene();
         LoadMenuScene();
+        QuitApplication();
     }
 
     // Loads scene by the sceneName through the parameter.
@@ -150,8 +151,6 @@ public class SingletonSceneManager : MonoBehaviour
             Invoke("GetLoadingBackground", 1f);
             Invoke("GetButtons", 1f);
             Invoke("SetButtonOnClickListeners", 1f);
-
-            QuitApplication();
         }
     }
 
