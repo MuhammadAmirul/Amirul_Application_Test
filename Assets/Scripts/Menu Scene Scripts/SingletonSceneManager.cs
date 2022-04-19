@@ -150,6 +150,17 @@ public class SingletonSceneManager : MonoBehaviour
             Invoke("GetLoadingBackground", 1f);
             Invoke("GetButtons", 1f);
             Invoke("SetButtonOnClickListeners", 1f);
+
+            QuitApplication();
+        }
+    }
+
+    // Quits the application when escape key is pressed.
+    void QuitApplication()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 }
